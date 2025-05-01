@@ -22,6 +22,7 @@ def rotate_on_fi(point, fi):
     return mult_matrix_vector(matrix, point)
 
 def rotate_on_fi_around_pivot(point, fi, pivot):
+    """Rotates a point on fi angle (given in degrees) round the pivot"""
     new_point = point.copy()
     new_point[0] -= pivot[0]
     new_point[1] -= pivot[1]
