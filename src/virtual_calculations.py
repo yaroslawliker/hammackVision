@@ -52,7 +52,10 @@ def back_project_virtual(
 def print_3D_points(points_3D):
     print("3D point coordinates (cm):")
     for i, point in enumerate(points_3D):
-        print(f"\tPoint {i}: {point}")
+        print(f"\tPoint {i}:", end=" ")
+        for j in range(3):
+            print(f"{point[j]:.4f}", end=" ")
+        print()
     
 
 def virtual_straight():
