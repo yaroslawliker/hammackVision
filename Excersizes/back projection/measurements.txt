@@ -19,6 +19,6 @@ cola2:
     Can:
         X = 16 cm
         Y = 0
-        Z = 31.5 c5
+        Z = 31.5 cm
         
     

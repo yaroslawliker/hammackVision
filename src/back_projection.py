@@ -3,7 +3,7 @@
 ###
 
 import numpy as np
-
+from scipy.spatial.transform import Rotation
 
 class Camera:
     def __init__(self, fx, fy, skew=0):
@@ -114,11 +114,10 @@ if __name__ == "__main__":
     # fx = fy = f / pixel_size_cm = 2.73 / 0.0018 ≈ 1516.67
     f = 27.3 / 0.0018
     cameraY = 5.75
-    camera_orientation = np.array([
-        [1, 0, 0],
-        [0, 1, 0],
-        [0, 0, 1]
-    ])
+
+    # Camera orientation
+    rotation = Rotation.from_euler('xyz', [-1, 0, 0], degrees=True)
+    camera_orientation = rotation.as_matrix()
 
     galaxy50ACamera = Camera(f, f)
 
