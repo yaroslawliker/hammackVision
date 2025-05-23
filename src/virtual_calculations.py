@@ -75,8 +75,29 @@ def virtual_straight():
 
     print_3D_points(points_3D)
 
+def virtual_25degree():
+    points_3D = back_project_virtual(
+        photo_size=np.asarray([1920, 1080]),
+        horisontal_camera_size=36 / 100,
+        f=30 / 100,
+        camera_y=200,
+        camera_euler_rotation_agles=np.array([15, 0, 0]),
+        points_pixels=np.array([
+            [672, 407],
+
+            [834, 635],
+            [965, 635],
+            [1087, 635],
+            
+            [1416, 346]
+            ])
+    )
+
+    print_3D_points(points_3D)
+
 if __name__ == "__main__":
-    virtual_straight()
+    # virtual_straight()
+    virtual_25degree()
 
 
 
