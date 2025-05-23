@@ -54,10 +54,6 @@ class PhotoPoint:
         assert pixel_x >= 0 and pixel_x <= photo_settings.size_pixel_x, "pixel_x out of bounds"
         assert pixel_y >= 0 and pixel_y <= photo_settings.size_pixel_y, "pixel_y out of bounds"
 
-        # Normilize pixel coordinates
-        pixel_x = pixel_x - photo_settings.size_pixel_x
-        pixel_y = pixel_y - photo_settings.size_pixel_y
-
         self.point_pixels = np.array([pixel_x, pixel_y])
 
     def get_point_pixels(self):
