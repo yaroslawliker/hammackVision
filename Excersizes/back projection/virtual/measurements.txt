@@ -1,0 +1,23 @@
+# 3 cubes
+    Here blender and model asixes differ:
+        blenders -> models
+        oZ -> oY
+        oX -> -oX
+        oY -> oZ
+    In this document i use model coordinates
+
+    # Straight render
+        Camera:
+            x = 0
+            y = 100 cm
+            z = 0
+            alpha = beta = gamma = 0
+        Green dot:
+            x = 200 cm
+            z = 1020 cm
+            y = 0
+            
+            
+            
+
+    
