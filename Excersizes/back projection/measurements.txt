@@ -1,0 +1,24 @@
+
+cola1:
+    Camera:
+        c_x = 0
+        c_y = 5.75 cm
+        c_z = 0
+        No rotation
+    Can:
+        X ~ 0
+        Y = 0
+        Z = 48 cm
+    
+cola2:
+    Camera:
+        c_x = 0
+        c_y = 5.75 cm
+        c_z = 0
+        No rotation
+    Can:
+        X = 16 cm
+        Y = 0
+        Z = 31.5 c5
+        
+    
