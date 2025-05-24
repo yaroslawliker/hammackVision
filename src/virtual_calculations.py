@@ -98,9 +98,27 @@ def virtual_25degree():
 
     print_3D_points(points_3D)
 
+def real_misto():
+    points_3D = back_project_virtual(
+        photo_size=np.asarray([800, 533]),
+        horisontal_camera_size=36 / 100,
+        f=27 / 100,
+        camera_y=100,
+        camera_euler_rotation_agles=np.array([0, 0, 0]),
+        points_pixels=np.array([
+            [529, 341],
+            [769, 345],
+            [311, 326]
+            ])
+    )
+
+    print_3D_points(points_3D)
+
+
 if __name__ == "__main__":
     # virtual_straight()
-    virtual_25degree()
+    # virtual_25degree()
+    real_misto()
 
 
 
