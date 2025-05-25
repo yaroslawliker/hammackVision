@@ -1,0 +1,37 @@
+[
+    {
+        "name": "15degree",
+
+        "camera": {
+            "photoSize": [1920, 1080],
+            "horizontalSensorSize": 3.6,
+            "focalLength": 3.0,
+            "y": 200,
+            "eulerRotationAngles": [15, 0, 0]
+        },
+
+        "points": [
+            {
+                "pixels": [672, 407],
+                "real": [200, 0, -1100]
+            },
+            {
+                "pixels": [834, 635],
+                "real": [50, 0, -600]
+            },
+            {
+                "pixels": [965, 635],
+                "real": [0, 0, -600]
+            },
+            {
+                "pixels": [1087, 635],
+                "real": [-50, 0, -600]
+            },
+            {
+                "pixels": [1416, 346],
+                "real": [-400, 0, -1400]
+            }
+            
+        ]
+    }
+]
