@@ -5,7 +5,7 @@ import back_projection as bp
 
 def back_project_virtual(
         photo_size: np.ndarray, 
-        horisontal_camera_size,
+        pixel_size,
         f,
         camera_y,
         camera_euler_rotation_agles: np.ndarray,
@@ -19,9 +19,7 @@ def back_project_virtual(
     photo_width = photo_size[0]
     photo_height = photo_size[1]
 
-    pixel_size_cm = horisontal_camera_size / photo_width
-
-    f_per_pixel = f / pixel_size_cm
+    f_in_pixels = f / pixel_size
 
     camera_position = np.array([0, camera_y, 0])
 
@@ -29,7 +27,7 @@ def back_project_virtual(
     camera_orientation = rotation.as_matrix()
 
     # Instantiate the camera
-    camera = bp.Camera(f_per_pixel, f_per_pixel)
+    camera = bp.Camera(f_in_pixels, f_in_pixels)
     camera.set_position(camera_position)
     camera.set_orientation(camera_orientation)
 

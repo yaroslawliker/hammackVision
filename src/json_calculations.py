@@ -11,9 +11,17 @@ def run_calculation(data: list, camera_names: list = None, comparing=False):
             points = session["points"]
             points_pixels = [point["pixels"] for point in points]
 
+            if ("pixelSize" in camera):
+                pixel_size = camera["pixelSize"]
+            elif ("horizontalSensorSize" in camera):
+                pixel_size = camera["horizontalSensorSize"] / camera["photoSize"][0]
+            else:
+                raise ValueError("Object must contain either pixelSize or horisontalSensorSize")
+
+
             points_3D = virtual_calculations.back_project_virtual(
                 np.array(camera["photoSize"]),
-                camera["horizontalSensorSize"],
+                pixel_size,
                 camera["focalLength"],
                 camera["y"],
                 np.array(camera["eulerRotationAngles"]),
@@ -67,13 +75,13 @@ if __name__ == "__main__":
     #     ["random city photo"]
     # )
 
-    # run_calculation_on_path(
-    #     "data/test/back projection/real/room.json",
-    #     ["table", "fridge"]
-    # )
-
     run_calculation_on_path(
-        "data/test/back projection/real/cola.json"
+        "data/test/back projection/real/room.json",
+        ["table", "fridge"]
     )
+
+    # run_calculation_on_path(
+    #     "data/test/back projection/real/cola.json"
+    # )
 
     
