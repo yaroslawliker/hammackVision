@@ -4,8 +4,9 @@
 
         "camera": {
             "photoSize": [1280, 960],
-            "horizontalSensorSize": 3.6,
-            "focalLength": 2.6,
+            "diact_pixelSize": 0.96,
+            "horizontalSensorSize": 0.96,
+            "focalLength": 0.44,
             "y": 51.5,
             "eulerRotationAngles": [0, 0, 0]
         },
