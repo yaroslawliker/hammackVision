@@ -61,8 +61,8 @@ def print_3D_points(points_3D):
 def virtual_straight():
     points_3D = back_project_virtual(
         photo_size=np.asarray([1920, 1080]),
-        horisontal_camera_size=36 / 100,
-        f=30 / 100,
+        horisontal_camera_size=36 / 10,
+        f=30 / 10,
         camera_y=100,
         camera_euler_rotation_agles=np.array([0, 0, 0]),
         points_pixels=np.array([
@@ -78,11 +78,11 @@ def virtual_straight():
 
     print_3D_points(points_3D)
 
-def virtual_25degree():
+def virtual_15degree():
     points_3D = back_project_virtual(
         photo_size=np.asarray([1920, 1080]),
-        horisontal_camera_size=36 / 100,
-        f=30 / 100,
+        horisontal_camera_size=36 / 10,
+        f=30 / 10,
         camera_y=200,
         camera_euler_rotation_agles=np.array([15, 0, 0]),
         points_pixels=np.array([
@@ -142,11 +142,11 @@ def real_fridge():
     print_3D_points(points_3D)
 
 if __name__ == "__main__":
-    # virtual_straight()
-    # virtual_25degree()
+    virtual_straight()
+    virtual_15degree()
     # real_misto()
     # real_table()
-    real_fridge()
+    # real_fridge()
 
 
 
