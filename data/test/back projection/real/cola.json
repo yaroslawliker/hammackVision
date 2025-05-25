@@ -1,0 +1,25 @@
+ [
+    {
+        "name": "cola",
+
+        "camera": {
+            "photoSize": [1280, 960],
+            "horizontalSensorSize": 3.6,
+            "focalLength": 2.6,
+            "y": 5.75 ,
+            "eulerRotationAngles": [0, 0, 0]
+        },
+
+        "points": [
+            {
+                "pixels": [743, 603],
+                "real": [0, 0, -48]
+            },
+            {
+                "pixels": [1079, 675],
+                "real": [-16, 0, -31.5]
+            }
+            
+        ]
+    }
+] 

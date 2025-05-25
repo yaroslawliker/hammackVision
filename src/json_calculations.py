@@ -6,7 +6,7 @@ import virtual_calculations
 def run_calculation(data: list, camera_names: list = None, comparing=False):
 
     for session in data:
-        if session["name"] in camera_names or camera_names is None:
+        if camera_names is None or (session["name"] in camera_names):
             camera = session["camera"]
             points = session["points"]
             points_pixels = [point["pixels"] for point in points]
@@ -57,19 +57,23 @@ def run_calculation_on_path(json_path, session_names = None):
 
 if __name__ == "__main__":
 
-    run_calculation_on_path(
-        "data/test/back projection/virtual/3cubes.json",
-        ["straight","15degree"]
-    )
+    # run_calculation_on_path(
+    #     "data/test/back projection/virtual/3cubes.json",
+    #     ["straight","15degree"]
+    # )
+
+    # run_calculation_on_path(
+    #     "data/test/back projection/real/noinfo.json",
+    #     ["random city photo"]
+    # )
+
+    # run_calculation_on_path(
+    #     "data/test/back projection/real/room.json",
+    #     ["table", "fridge"]
+    # )
 
     run_calculation_on_path(
-        "data/test/back projection/real/noinfo.json",
-        ["random city photo"]
-    )
-
-    run_calculation_on_path(
-        "data/test/back projection/real/room.json",
-        ["table", "fridge"]
+        "data/test/back projection/real/cola.json"
     )
 
     
