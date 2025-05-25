@@ -1,0 +1,41 @@
+[
+    {
+        "name": "table",
+
+        "camera": {
+            "photoSize": [1280, 960],
+            "horizontalSensorSize": 3.6,
+            "focalLength": 2.6,
+            "y": 51.5,
+            "eulerRotationAngles": [0, 0, 0]
+        },
+
+        "points": [
+            {
+                "pixels": [635, 712],
+                "real": [-1, 0, -244]
+            }
+            
+        ]
+    },
+
+    {
+        "name": "fridge",
+
+        "camera": {
+            "photoSize": [1280, 960],
+            "horizontalSensorSize": 3.6,
+            "focalLength": 3.0,
+            "y": 91.25,
+            "eulerRotationAngles": [4, 0, 0]
+        },
+
+        "points": [
+            {
+                "pixels": [743, 360],
+                "real": [223, 0, -73]
+            }
+        ]
+    }
+
+] 

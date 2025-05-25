@@ -1,5 +1,41 @@
 [
     {
+        "name": "straight",
+
+        "camera": {
+            "photoSize": [1920, 1080],
+            "horizontalSensorSize": 3.6,
+            "focalLength": 3.0,
+            "y": 100,
+            "eulerRotationAngles": [0, 0, 0]
+        },
+
+        "points": [
+            {
+                "pixels": [669, 685],
+                "real": [200, 0, -1100]
+            },
+            {
+                "pixels": [827, 806],
+                "real": [50, 0, -600]
+            },
+            {
+                "pixels": [964, 805],
+                "real": [0, 0, -600]
+            },
+            {
+                "pixels": [1092, 807],
+                "real": [-50, 0, -600]
+            },
+            {
+                "pixels": [1416, 654],
+                "real": [-400, 0, -1400]
+            }
+            
+        ]
+    },
+
+    {
         "name": "15degree",
 
         "camera": {

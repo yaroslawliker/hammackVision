@@ -1,0 +1,23 @@
+[
+    {
+        "name": "random city photo",
+
+        "camera": {
+            "photoSize": [800, 533],
+            "horizontalSensorSize": 3.6,
+            "focalLength": 2.7,
+            "y": 100,
+            "eulerRotationAngles": [0, 0, 0]
+        },
+
+        "points": [
+            {
+                "pixels": [447, 312]
+            },
+            {
+                "pixels": [743, 360]
+            }
+            
+        ]
+    }
+]
