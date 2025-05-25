@@ -96,7 +96,6 @@ def virtual_25degree():
             ])
     )
 
-    print_3D_points(points_3D)
 
 def real_misto():
     points_3D = back_project_virtual(
@@ -106,19 +105,48 @@ def real_misto():
         camera_y=100,
         camera_euler_rotation_agles=np.array([0, 0, 0]),
         points_pixels=np.array([
-            [529, 341],
-            [769, 345],
-            [311, 326]
+            [447, 312],
+            [743, 360]
             ])
     )
 
     print_3D_points(points_3D)
 
+def real_table():
+    points_3D = back_project_virtual(
+        photo_size=np.asarray([1280, 960]),
+        horisontal_camera_size= 36 / 100,
+        f=26 / 100,
+        camera_y=51.5,
+        camera_euler_rotation_agles=np.array([0, 0, 0]),
+        points_pixels=np.array([
+            [635, 712],
+            [192, 664]
+            ])
+    )
+
+    print_3D_points(points_3D)
+
+def real_fridge():
+    points_3D = back_project_virtual(
+        photo_size=np.asarray([1280, 960]),
+        horisontal_camera_size= 6.4 / 100,
+        f=3.9 / 100,
+        camera_y=91.25,
+        camera_euler_rotation_agles=np.array([0, 0, 0]),
+        points_pixels=np.array([
+            [307, 867]
+            ])
+    )
+
+    print_3D_points(points_3D)
 
 if __name__ == "__main__":
     # virtual_straight()
     # virtual_25degree()
-    real_misto()
+    # real_misto()
+    # real_table()
+    real_fridge()
 
 
 
