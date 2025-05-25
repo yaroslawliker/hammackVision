@@ -9,11 +9,11 @@
 
     Green dot:
             x = 200 cm
-            z = 1200 cm
+            z = 1100 cm
             y = 0
         
     Yellow dot:
-        x = -50 cm
+        x = 50 cm
         z = 600 cm
         y = 0
     Orange dot:
