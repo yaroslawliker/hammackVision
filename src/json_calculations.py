@@ -33,7 +33,9 @@ def print_errors(estimated, actual, num):
     print(f"\t\tAbsolute: {error_abs}")
     print(f"\t\tRelative: {error_rel_str}")
 
-def run_calculation(data: list, camera_names: list = None, comparing=False):
+def calculate_3Dpoints(data: list, camera_names: list = None):
+
+    result = []
 
     for session in data:
         if camera_names is None or (session["name"] in camera_names):
@@ -71,9 +73,6 @@ def run_calculation(data: list, camera_names: list = None, comparing=False):
                     np.array(camera["eulerRotationAngles"]),
                     np.array(points_pixels)
                 )
-
-            print("--- Session: " + session["name"])
-
             
             points_actual = []
             for point in points:
@@ -82,18 +81,32 @@ def run_calculation(data: list, camera_names: list = None, comparing=False):
                 except KeyError:
                     points_actual.append(None)
 
-            i = 0
-            for point_actual, point_estimated in zip(points_actual, points_3D):
-                print_3Dpoint(point_estimated, i)
-                if comparing and point_actual is not None:
-                    print_errors(point_estimated, point_actual, i)
-                i += 1
+            result.append([points_3D, points_actual, session["name"]])
 
+    return result
 
-def run_calculation_on_path(json_path, session_names = None):
+def show_results(points_3D, points_actual, session_name, comparing=False):
+    print("--- Session: " + session_name)
+
+    i = 0
+    for point_actual, point_estimated in zip(points_actual, points_3D):
+        print_3Dpoint(point_estimated, i)
+        if comparing and point_actual is not None:
+            print_errors(point_estimated, point_actual, i)
+        i += 1
+
+def extract_json_data(json_path):
     with open(json_path, "rt") as file:
         parsed = json.load(file)
-        run_calculation(parsed, session_names, True)
+    
+    return parsed
+
+def run_calculation_on_path(json_path, session_names=None, comparing=True):
+    parsed = extract_json_data(json_path)
+    
+    res = calculate_3Dpoints(parsed, session_names)
+    for points_3D, points_actual, session_name in res:
+        show_results(points_3D, points_actual, session_name, comparing=True)
 
 if __name__ == "__main__":
 
@@ -109,8 +122,10 @@ if __name__ == "__main__":
 
     run_calculation_on_path(
         "data/test/back projection/real/room.json",
-        ["table", "fridge"]
+        ["fridge"]
     )
+
+
 
     # run_calculation_on_path(
     #     "data/test/back projection/real/cola.json"
