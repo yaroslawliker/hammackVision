@@ -108,10 +108,19 @@ def run_calculation_on_path(json_path, session_names=None, comparing=True):
     for points_3D, points_actual, session_name in res:
         show_results(points_3D, points_actual, session_name, comparing=True)
 
-def guess_angle(json_path, start, stop, step, cost_function = None, print_every_new=False):
+def guess_angle(json_path, 
+                alpha_start, alpha_stop, alpha_step, 
+                y_start, y_stop, y_step, 
+                sample_cost_function = None, batch_cost_function = None,
+                use_points=None,
+                print_every_new=False):
 
-    if cost_function is None:
-        cost_function = lambda x, y: (abs(x) + abs(y)) / 2
+    if sample_cost_function is None:
+        sample_cost_function = lambda x, y: (abs(x) + abs(y)) / 2
+
+    if batch_cost_function is None:
+        batch_cost_function = lambda errors: sum(errors) / len(errors)
+
 
     parsed = extract_json_data(
         json_path,
@@ -119,29 +128,36 @@ def guess_angle(json_path, start, stop, step, cost_function = None, print_every_
 
     min_err_abs = float("inf")
     min_i = 0
+    min_y = 0
 
-    angles = [start + step*i for i in range( int((stop - start) / step) + 1)]
+    angles = [alpha_start + alpha_step*i for i in range( int((alpha_stop - alpha_start) / alpha_step) + 1)]
     for i in angles:
         parsed[0]["camera"]["eulerRotationAngles"][0] = i
 
-        points_3D, points_actual, _  = calculate_3Dpoints(parsed)[0]
-        error_abs, _ = calculate_error(
-            points_3D[0],
-            points_actual[0]
-        )
+        ys = [y_start + y_step*i for i in range( int((y_stop - y_start) / y_step) + 1)]
+        for y in ys:
+            parsed[0]["camera"]["y"] = y
 
-        error = cost_function(error_abs[0], error_abs[2])
+            points_3D, points_actual, _  = calculate_3Dpoints(parsed)[0]
 
-        # print(f"Angle: {round(i, 1)}, Average error: {round(error, 2)}")
+            if use_points is not None:
+                points_3D = [points_3D[j] for j in use_points]
+                points_actual = [points_actual[j] for j in use_points]
 
+            errors_abs = [calculate_error(points_3D[j], points_actual[j])[0] for j in range(len(points_3D))]
 
-        if error < min_err_abs:
-            min_err_abs = error
-            min_i = i
-            if print_every_new:
-                print(f"New min: {min_err_abs} for angle {min_i}")
+            errors = [sample_cost_function(error[0], error[2]) for error in errors_abs]
+
+            error = batch_cost_function(errors)
+
+            if error < min_err_abs:
+                min_err_abs = error
+                min_i = i
+                min_y = y
+                if print_every_new:
+                    print(f"New min: {min_err_abs} for angle {min_i} and y {min_y}")
         
-    print(f"Angle: {min_i}, Error: {min_err_abs}")
+    print(f"Angle: {min_i}, Y: {min_y} Error: {min_err_abs}")
 
 
 if __name__ == "__main__":
@@ -167,8 +183,15 @@ if __name__ == "__main__":
     # guess_angle("data/test/back projection/real/roomtop.json", -60, 60, 0.1, lambda x, y: (abs(x)), True) 
     # guess_angle("data/test/back projection/real/roomtop.json", -60, 60, 0.1, lambda x, y: (abs(y)), True)
     # guess_angle("data/test/back projection/real/roomtop.json", -60, 60, 0.1, lambda x, y: (x**2 + y**2)**0.5, False)
+    guess_angle("data/test/back projection/real/roomtop.json",
+                 35, 50, 0.1,
+                 223, 227, 0.1,
+                 use_points=[0],
+                 print_every_new=True)
 
-    run_calculation_on_path("data/test/back projection/real/roomtop.json")
+
+
+    # run_calculation_on_path("data/test/back projection/real/roomtop.json")
 
 
     
