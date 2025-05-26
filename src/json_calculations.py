@@ -1,7 +1,7 @@
 import json
 import numpy as np
 
-import virtual_calculations
+import back_project_facade
 
 def run_calculation(data: list, camera_names: list = None, comparing=False):
 
@@ -11,24 +11,39 @@ def run_calculation(data: list, camera_names: list = None, comparing=False):
             points = session["points"]
             points_pixels = [point["pixels"] for point in points]
 
-            if ("pixelSize" in camera):
-                pixel_size = camera["pixelSize"]
-            elif ("horizontalSensorSize" in camera):
+            # Intrisic parameters format
+            if "fx" in camera and "u" in camera and "v" in camera:
+                fx = camera["fx"]
+                fy = camera["fy"] if "fy" in camera else fx
+
+                u = camera["u"] if "u" in camera else camera["photoSize"][0] / 2
+                v = camera["v"] if "v" in camera else camera["photoSize"][1] / 2
+            
+            # Pixel size and focal length format
+            elif "pixelSize" in camera and "focalLength" in camera:
+                fx = camera["focalLength"] / camera["pixelSize"]
+                fy = fx
+
+            # Horizontal sensor size and photo size format
+            elif "horizontalSensorSize" in camera and "focalLength" in camera:
                 pixel_size = camera["horizontalSensorSize"] / camera["photoSize"][0]
+                fx = camera["focalLength"] / pixel_size
+                fy = fx
+
             else:
-                raise ValueError("Object must contain either pixelSize or horisontalSensorSize")
+                raise ValueError("Object must contain at least one of this param groups: (fx,u,v, maybe fy) or (pixelSize, focalLength) or horisontalSensorSize")
+            
+            points_3D = back_project_facade.back_project_points(
+                    np.array(camera["photoSize"]),
+                    fx,
+                    fy,
+                    camera["y"],
+                    np.array(camera["eulerRotationAngles"]),
+                    np.array(points_pixels)
+                )
 
-
-            points_3D = virtual_calculations.back_project_virtual(
-                np.array(camera["photoSize"]),
-                pixel_size,
-                camera["focalLength"],
-                camera["y"],
-                np.array(camera["eulerRotationAngles"]),
-                np.array(points_pixels)
-            )
             print("--- Session: " + session["name"])
-            virtual_calculations.print_3D_points(points_3D)
+            back_project_facade.print_3D_points(points_3D)
 
             if (comparing == True):
                 print("Errors:")
@@ -75,13 +90,13 @@ if __name__ == "__main__":
     #     ["random city photo"]
     # )
 
-    run_calculation_on_path(
-        "data/test/back projection/real/room.json",
-        ["table", "fridge"]
-    )
-
     # run_calculation_on_path(
-    #     "data/test/back projection/real/cola.json"
+    #     "data/test/back projection/real/room.json",
+    #     ["table", "fridge"]
     # )
+
+    run_calculation_on_path(
+        "data/test/back projection/real/cola.json"
+    )
 
     

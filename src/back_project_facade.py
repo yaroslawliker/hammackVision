@@ -3,13 +3,16 @@ from scipy.spatial.transform import Rotation
 
 import back_projection as bp
 
-def back_project_virtual(
+
+def back_project_points(
         photo_size: np.ndarray, 
-        pixel_size,
-        f,
+        fx,
+        fy,
         camera_y,
         camera_euler_rotation_agles: np.ndarray,
-        points_pixels: np.ndarray
+        points_pixels: np.ndarray,
+        u = None,
+        v = None
     ) -> np.array:
 
     assert len(photo_size) == 2, "photo_size must be a 2D array"
@@ -19,22 +22,20 @@ def back_project_virtual(
     photo_width = photo_size[0]
     photo_height = photo_size[1]
 
-    f_in_pixels = f / pixel_size
-
     camera_position = np.array([0, camera_y, 0])
 
     rotation = Rotation.from_euler('xyz', camera_euler_rotation_agles, degrees=True)
     camera_orientation = rotation.as_matrix()
 
     # Instantiate the camera
-    camera = bp.Camera(f_in_pixels, f_in_pixels)
+    camera = bp.Camera(fx, fy)
     camera.set_position(camera_position)
     camera.set_orientation(camera_orientation)
 
     # Instantiate the back projector
     projector = bp.BackProjector(camera)
     
-    photo = bp.Photo(photo_width, photo_height)
+    photo = bp.Photo(photo_width, photo_height, u, v)
 
     points_3D = []
 
