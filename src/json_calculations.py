@@ -180,18 +180,49 @@ if __name__ == "__main__":
     # run_calculation_on_path(
     #     "data/test/back projection/real/cola.json"
     # )
-    # guess_angle("data/test/back projection/real/roomtop.json", -60, 60, 0.1, lambda x, y: (abs(x)), True) 
-    # guess_angle("data/test/back projection/real/roomtop.json", -60, 60, 0.1, lambda x, y: (abs(y)), True)
+    
     # guess_angle("data/test/back projection/real/roomtop.json", -60, 60, 0.1, lambda x, y: (x**2 + y**2)**0.5, False)
-    guess_angle("data/test/back projection/real/roomtop.json",
-                 35, 50, 0.1,
-                 223, 227, 0.1,
-                 use_points=[0],
-                 print_every_new=True)
+    
+    # print("Guessing angles...")
+
+    # print("By X only")
+    # guess_angle("data/test/back projection/real/roomtop.json",
+    #              20, 60, 0.1,
+    #              223, 227, 0.1,
+    #              sample_cost_function=lambda x, y: (abs(x)),
+    #              print_every_new=False)
+    
+    # print("By Y only")
+    # guess_angle("data/test/back projection/real/roomtop.json",
+    #              20, 60, 0.1,
+    #              223, 227, 0.1,
+    #              sample_cost_function=lambda x, y: (abs(y)),
+    #              print_every_new=False)
+    
+    # print("By first point")
+    # guess_angle("data/test/back projection/real/roomtop.json",
+    #              20, 60, 0.1,
+    #              223, 227, 0.1,
+    #              use_points=[0],
+    #              print_every_new=False)
+    
+    # print("By second point")
+    # guess_angle("data/test/back projection/real/roomtop.json",
+    #              20, 60, 0.1,
+    #              223, 227, 0.1,
+    #              use_points=[1],
+    #              print_every_new=False)
+
+    # print("Total")
+    # guess_angle("data/test/back projection/real/roomtop.json",
+    #              20, 60, 0.1,
+    #              223, 227, 0.1,
+    #              print_every_new=False)
+    
 
 
 
-    # run_calculation_on_path("data/test/back projection/real/roomtop.json")
+    run_calculation_on_path("data/test/back projection/real/roomtop.json")
 
 
     
