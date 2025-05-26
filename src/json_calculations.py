@@ -103,7 +103,7 @@ def extract_json_data(json_path):
 
 def run_calculation_on_path(json_path, session_names=None, comparing=True):
     parsed = extract_json_data(json_path)
-    
+
     res = calculate_3Dpoints(parsed, session_names)
     for points_3D, points_actual, session_name in res:
         show_results(points_3D, points_actual, session_name, comparing=True)
@@ -120,15 +120,40 @@ if __name__ == "__main__":
     #     ["random city photo"]
     # )
 
+
+    def gessing_angle():
+
+        parsed = extract_json_data(
+        "data/test/back projection/real/room.json",
+        )
+
+        min_err_rel = 10000
+        min_i = 0
+        angles = [-30 + 0.1*i for i in range( int((60)/0.1))]
+        for i in angles:
+            parsed[0]["camera"]["eulerRotationAngles"][0] = i
+
+            points_3D, points_actual, _  = calculate_3Dpoints(parsed, ["fridge"])[0]
+            error_abs, _ = calculate_error(
+                points_3D[0],
+                points_actual[0]
+            )
+            if abs(error_abs[2]) < min_err_rel:
+                min_err_rel = abs(error_abs[2])
+                min_i = i
+                print(f"New min: {min_err_rel} for angle {i}")
+            
+        print(f"Angle: {i}, Error: {error_abs[2]}")
+
+    # gessing_angle()
+
     run_calculation_on_path(
         "data/test/back projection/real/room.json",
         ["fridge"]
     )
 
-
-
-    # run_calculation_on_path(
-    #     "data/test/back projection/real/cola.json"
-    # )
+    run_calculation_on_path(
+        "data/test/back projection/real/cola.json"
+    )
 
     
