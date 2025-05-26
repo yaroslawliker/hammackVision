@@ -24,7 +24,7 @@ objp[:,:2] = np.mgrid[0:col,0:row].T.reshape(-1,2) * 1.5
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 
-images_path = 'data/calibration/galaxyA50/'
+images_path = 'data/calibration/galaxyA50_4032/'
 images = glob.glob(images_path + '*.jpg')
 
 cv.namedWindow('img', cv.WINDOW_NORMAL)
