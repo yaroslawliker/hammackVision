@@ -3,6 +3,36 @@ import numpy as np
 
 import back_project_facade
 
+def calculate_error(estimated, actual):
+
+    error_abs = [actual[i] - estimated[i] for i in range(3)]
+
+    error_rel = []
+    for i in range(3): 
+        if estimated[i] == 0: 
+            error_rel.append(0) 
+        else: 
+            error_rel.append(error_abs[i] / estimated[i])
+
+    return error_abs, error_rel
+
+def print_3Dpoint(point, num, digits_after_dot=2):
+    print(f"\tPoint {num}:", end=" ")
+    for i in range(3):
+        print(round(point[i], digits_after_dot), end=" ")
+    print()
+
+def print_errors(estimated, actual, num):
+    error_abs, error_rel = calculate_error(estimated, actual)
+
+    error_abs = [round(error_abs[i], 2) for i in range(3)]
+    error_rel_percent = [round(abs(error_rel[i] * 100), 1) for i in range(3)]
+    error_rel_str = [str(error_rel_percent[i]) + "%" for i in range(3)]
+
+    print(f"\t\tActual: {actual}")
+    print(f"\t\tAbsolute: {error_abs}")
+    print(f"\t\tRelative: {error_rel_str}")
+
 def run_calculation(data: list, camera_names: list = None, comparing=False):
 
     for session in data:
@@ -12,7 +42,7 @@ def run_calculation(data: list, camera_names: list = None, comparing=False):
             points_pixels = [point["pixels"] for point in points]
 
             # Intrisic parameters format
-            if "fx" in camera and "u" in camera and "v" in camera:
+            if "fx" in camera:
                 fx = camera["fx"]
                 fy = camera["fy"] if "fy" in camera else fx
 
@@ -43,35 +73,22 @@ def run_calculation(data: list, camera_names: list = None, comparing=False):
                 )
 
             print("--- Session: " + session["name"])
-            back_project_facade.print_3D_points(points_3D)
 
-            if (comparing == True):
-                print("Errors:")
-                points_actual = []
-                for point in points:
-                    try:
-                        points_actual.append(point["real"])
-                    except KeyError:
-                        points_actual.append(None)                    
+            
+            points_actual = []
+            for point in points:
+                try:
+                    points_actual.append(point["real"])
+                except KeyError:
+                    points_actual.append(None)
 
-                i = 0
-                for point_actual, point_estimated in zip(points_actual, points_3D):
-                    if (point_actual is None):
-                        print(f"\tPoint {i}: no real calculation")
-                        continue
+            i = 0
+            for point_actual, point_estimated in zip(points_actual, points_3D):
+                print_3Dpoint(point_estimated, i)
+                if comparing and point_actual is not None:
+                    print_errors(point_estimated, point_actual, i)
+                i += 1
 
-                    error_abs = [point_actual[i] - point_estimated[i] for i in range(3)]
-                    error_rel = [error_abs[i] / point_estimated[i] for i in (0,2)]
-                    error_rel.insert(1, 0)
-
-                    error_abs = [round(error_abs[i],2) for i in range(3)]
-
-                    error_rel_percent = [round(abs(error_rel[i]*100), 1) for i in range(3)]
-                    error_rel_str = [str(error_rel_percent[i])+"%" for i in range(3)]
-                    
-                    print(f"\tPoint {i}: abs: {error_abs}, rel: {error_rel_str}")
-
-                    i+=1
 
 def run_calculation_on_path(json_path, session_names = None):
     with open(json_path, "rt") as file:
@@ -90,13 +107,13 @@ if __name__ == "__main__":
     #     ["random city photo"]
     # )
 
-    # run_calculation_on_path(
-    #     "data/test/back projection/real/room.json",
-    #     ["table", "fridge"]
-    # )
-
     run_calculation_on_path(
-        "data/test/back projection/real/cola.json"
+        "data/test/back projection/real/room.json",
+        ["table", "fridge"]
     )
+
+    # run_calculation_on_path(
+    #     "data/test/back projection/real/cola.json"
+    # )
 
     

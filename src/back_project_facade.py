@@ -48,14 +48,6 @@ def back_project_points(
 
     return np.array(points_3D)
 
-def print_3D_points(points_3D):
-    print("3D point coordinates (cm):")
-    for i, point in enumerate(points_3D):
-        print(f"\tPoint {i}:", end=" ")
-        for j in range(3):
-            print(f"{point[j]:.4f}", end=" ")
-        print()
-
 if __name__ == "__main__":
 
     pass
