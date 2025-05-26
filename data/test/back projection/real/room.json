@@ -4,9 +4,10 @@
 
         "camera": {
             "photoSize": [1280, 960],
-            "diact_pixelSize": 0.96,
-            "horizontalSensorSize": 0.96,
-            "focalLength": 0.44,
+            "fx" : 1035.990987371761,
+            "fy" : 1037.5660299778167,
+            "u": 647.1976126037574,
+            "v": 501.28397224530966,
             "y": 51.5,
             "eulerRotationAngles": [0, 0, 0]
         },
