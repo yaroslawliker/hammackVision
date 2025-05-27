@@ -106,7 +106,7 @@ def run_calculation_on_path(json_path, session_names=None, comparing=True):
 
     res = calculate_3Dpoints(parsed, session_names)
     for points_3D, points_actual, session_name in res:
-        show_results(points_3D, points_actual, session_name, comparing=True)
+        show_results(points_3D, points_actual, session_name, comparing)
 
 def guess_angle(json_path, 
                 alpha_start, alpha_stop, alpha_step, 
@@ -222,7 +222,7 @@ if __name__ == "__main__":
 
 
 
-    run_calculation_on_path("data/test/back projection/real/roomtop.json")
+    run_calculation_on_path("data/test/back projection/real/roomtop.json", comparing=False)
 
 
     
