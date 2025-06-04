@@ -1,0 +1,3 @@
+[submodule "hammackVisionAndroid"]
+	path = hammackVisionAndroid
+	url = git@github.com:yaroslawliker/hammackVisionAndroid.git
